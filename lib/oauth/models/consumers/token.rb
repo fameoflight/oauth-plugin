@@ -12,6 +12,7 @@ module Oauth
 
           model.send(:include, InstanceMethods)
           model.send(:extend, ClassMethods)
+          model.send(:attr_accessible, :user_id, :token)
 
         end
 
