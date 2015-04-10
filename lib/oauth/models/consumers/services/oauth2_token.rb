@@ -1,6 +1,6 @@
 require 'oauth2'
 class Oauth2Token < ConsumerToken
-  after_initialize :ensure_access, if: :expired_and_existing?
+  after_initialize :ensure_access, if: :expired_and_existing_and_using_refresh_tokens?
 
   def self.consumer
     @consumer||=create_consumer
@@ -26,7 +26,8 @@ class Oauth2Token < ConsumerToken
   end
 
   # @return [Boolean] Is the access token expired and does the record exist in the datastore?
-  def expired_and_existing?
+  def expired_and_existing_and_using_refresh_tokens?
+    return false if credentials[:options].fetch(:use_refresh_token, True)
     return true if !self.new_record? and Time.now.to_i >= self.expires_at.to_i
     false
   end
