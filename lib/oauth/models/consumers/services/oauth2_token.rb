@@ -27,7 +27,7 @@ class Oauth2Token < ConsumerToken
 
   # @return [Boolean] Is the access token expired and does the record exist in the datastore?
   def expired_and_existing_and_using_refresh_tokens?
-    return false if self.class.credentials[:options].fetch(:use_refresh_token, true)
+    return false if not self.class.credentials[:options].fetch(:use_refresh_token, true)
     return true if !self.new_record? and Time.now.to_i >= self.expires_at.to_i
     false
   end
