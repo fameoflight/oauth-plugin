@@ -26,7 +26,7 @@ module Oauth
         unless @token
           if @consumer.ancestors.include?(Oauth2Token)
             request_url = callback2_oauth_consumer_url + callback2_querystring
-            redirect_to @consumer.authorize_url(request_url) + '&approval_prompt=force'
+            redirect_to @consumer.authorize_url(request_url) + '&approval_prompt=force&access_type=offline'
           else
             request_url = callback_oauth_consumer_url(params[:id]) + callback2_querystring
             @request_token = @consumer.get_request_token(request_url)
