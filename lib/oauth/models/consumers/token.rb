@@ -12,6 +12,7 @@ module Oauth
 
           model.send(:include, InstanceMethods)
           model.send(:extend, ClassMethods)
+          model.send(:attr_accessible, :user_id, :token, :refresh_token)
 
         end
 
@@ -52,9 +53,9 @@ module Oauth
               token = access_token
             else
               if user
-                token = self.find_or_initialize_by_user_id_and_token(user.id, access_token.token)
+                token = self.find_or_initialize_by(user_id: user.id, token: access_token.token)
               else
-                token = self.find_or_initialize_by_token(access_token.token)
+                token = self.find_or_initialize_by(token: access_token.token)
               end
             end
 
